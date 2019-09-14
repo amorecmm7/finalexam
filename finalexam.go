@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 
@@ -37,7 +36,7 @@ func connectDB() {
 	url := os.Getenv("DATABASE_URL")
 	db, err = sql.Open("postgres", url)
 	if err != nil {
-		log.Println("Connect to database error", err)
+		fmt.Println("Connect to database error :", err)
 		return
 	}
 }
@@ -66,7 +65,6 @@ func postCustomer(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&cust)
 	if err != nil {
-		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"status": "JSON parsing on insertion error!!! " + err.Error()})
 		return
 	}
